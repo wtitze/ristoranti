@@ -1,0 +1,13 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+  body
+    h1= message
+    form(action='sendBorough', method='get')
+      select(name='quartiere')
+        each quartiere in list
+          option(value= quartiere._id) #{quartiere._id}
+      br
+      br
+      input(type='submit', value='invia')

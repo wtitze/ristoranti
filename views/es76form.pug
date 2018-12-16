@@ -1,0 +1,13 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+  body
+    form(action='sendString', method='get')
+      | #{message}: 
+      br
+      br
+      input(type='text', name='nomeParz')
+      br
+      br
+      input(type='submit', value='invia')

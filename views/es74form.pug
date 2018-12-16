@@ -1,0 +1,12 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+  body
+    h1= message
+    form(action='sendCuisine', method='get')
+      each cuisine in list
+        input(type='radio', name='cucina', value= cuisine._id)
+        |  #{cuisine._id}
+        br
+      input(type='submit', value='invia')

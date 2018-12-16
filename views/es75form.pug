@@ -1,0 +1,16 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+  body
+    h1= message
+    form(action='sendBoroughAndCuisine', method='get')
+      select(name='quartiere')
+        each quartiere in lists.Borough
+          option(value= quartiere._id) #{quartiere._id}
+      br
+      each cuisine in lists.Cuisine
+        input(type='radio', name='cucina', value= cuisine._id)
+        |  #{cuisine._id}
+        br
+      input(type='submit', value='invia')

@@ -1,0 +1,71 @@
+html
+  head
+    title Simple Map
+    meta(name='viewport', content='initial-scale=1.0')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    // necessaria per le mappe e per la ricerca dei luoghi di interesse
+    script(src='https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCzUI8LYmnHPyFrtRT8Q8IEREZfOygUl-U')
+    style.
+      .classMap { height: 500px }  <!-- necessaria per le mappe altrimenti le mappe non vengono visualizzate -->
+
+    // lo script che serve per visualizzare i marker viene costruito
+    // in tre momenti
+    
+    // Il primo serve per dire che lo script
+    // deve essere eseguito al termine del caricamento della pagina con 
+    // document.ready() e per definire le variabili globali 
+    
+    // Il secondo serve per inserire tutti i marker sulla mappa e per
+    // gestire le infoview: è realizzata utilizzando un each di pug
+    
+    // Il terzo chiude il document.ready() con il });
+    
+    // E' stato necessario dividere lo script in tre parti perchè la parte 
+    // centrale deve essere ripetuta più volte e deve essere gestita con 
+    // il ciclo di pug: per segnalare quali parti sono interne allo script
+    // e quali no, si usa il carattere |
+    // Notare che dopo lo script non c'è il solito carattere .
+    
+    script
+      | $(document).ready(function(){
+      | var marker1;
+      | var map1;
+      | var infowindow1 = new google.maps.InfoWindow();
+      | map1 = new google.maps.Map($("#map1")[0], {
+      | center: {lat: 40.759169, lng: -73.978347},
+      | zoom: 10
+      | });
+      if list !== undefined
+        each ristorante in list
+          | var myLatLng = {lat: #{ristorante.address.coord[1]}, lng: #{ristorante.address.coord[0]}};
+          | marker1 = new google.maps.Marker({
+          | position: myLatLng,
+          | map: map1,
+          | title: "#{ristorante.name}",
+          | indirizzo: "#{ristorante.address.street}"
+          | });
+          | google.maps.event.addListener(marker1, 'click', function() {
+          | infowindow1.setContent(this.indirizzo);
+          | infowindow1.open(map1, this);
+          | });   
+      | });
+  body
+    .container-fluid
+      .row
+        .col-sm-1   
+        .col-sm-8
+          h3= message 
+        .col-sm-3  
+      .row
+        .col-sm-1  
+        .col-sm-8  
+        .col-sm-3  
+      .row
+        .col-sm-1   
+        #map1.col-sm-8.classMap
+        .col-sm-3
+

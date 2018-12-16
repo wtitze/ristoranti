@@ -1,0 +1,21 @@
+html
+  head
+    title= title
+  body
+    h1= message
+    // definizione della tabella
+    if list !== undefined
+      table
+        thead
+          th(align='left') N
+          th(align='left') Nome 
+          th(align='left') Indirizzo
+        each ristorante, index in list
+          // una riga per ogni ristorante
+          tr
+            // prima cella il numero del ristorante
+            td= index
+            // seconda cella il nome del ristorante
+            td= ristorante.name
+            // terza cella l'indirizzo del ristorante
+            td= ristorante.address.street
